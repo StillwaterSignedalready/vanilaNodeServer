@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+        }
+        
+        .main {
+            flex-grow: 1;
+            height: 300px;
+            background-color: brown;
+        }
+        
+        .left {
+            order: -1;
+            flex: 0 1 200px;
+            margin-right: 20px;
+            height: 300px;
+            background-color: royalblue;
+        }
+        
+        .right {
+            flex: 0 1 100px;
+            margin-left: 20px;
+            height: 300px;
+            background-color: seagreen;
+        }
+
+        #btn {
+          width: 6em;
+          height: 3em;
+          margin: 60px auto;
+        }
+
+        input {
+          width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="main">
+      <button id="btn">click!</button>
+      <div>
+        用户名: <input>
+        <br>
+        密码: <input>
+      </div>
+    </div>
+    <div class="left">
+    </div>
+    <div class="right"></div>
+  </div>
+  <script>
+    var btn = document.getElementById('btn')
+    btn.addEventListener('click', () => {
+      // console.log('cliccccck')
+      const requestObj = new XMLHttpRequest();
+      // requestObj.open('GET', 'http://localhost/api/test?foo=1', true);
+      requestObj.open('POST', 'http://localhost/api/login', true);
+      requestObj.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      requestObj.onreadystatechange = ((event) => {
+        // console.log('event', event)
+        if (event.currentTarget.readyState === XMLHttpRequest.DONE) {
+          const { responseText } = event.currentTarget;
+          console.log(JSON.parse(responseText))
+        }
+      })
+      requestObj.send(`userName=${encodeURIComponent('abc')}&password=${encodeURIComponent('qwe')}`);
+    })
+  </script>
+</body>
+
+</html>
